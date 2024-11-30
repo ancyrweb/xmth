@@ -1,35 +1,48 @@
-import Fastify from 'fastify'
+import Fastify, {FastifyReply} from 'fastify'
 import path from 'path';
 import fastifyStatic from '@fastify/static';
+import fs from 'fs';
 
 const distPath = path.resolve(__dirname, '../../dist');
+const pagesPath = path.resolve(__dirname, 'pages');
 
 const fastify = Fastify({
   logger: false
 })
+
+const renderPage = (page: string, reply: FastifyReply) => {
+  const pagePath = path.resolve(pagesPath, page + '.html');
+
+  if (
+    fs.existsSync(pagePath) &&
+    fs.lstatSync(pagePath).isFile()
+  ) {
+    reply.type("text/html").send(fs.readFileSync(pagePath, 'utf-8'));
+    return;
+  }
+
+  reply.status(404).send('Page not found');
+}
 
 fastify.register(fastifyStatic, {
   root: distPath,
   prefix: '/js/'
 })
 
-// Declare a route
 fastify.get('/', function (request, reply) {
-  reply.type("text/html").send(`
-    <html>
-      <head>
-        <title>xmth</title>
-      </head>
-      <body>
-        <h1>Hello, world!</h1>
-        <div xh-load="/fragments/contacts"></div>
-        <script src="/js/index.js"></script>
-      </body>
-    </html>
-  `)
-})
+  return renderPage('index', reply);
+});
 
-// Declare a route
+fastify.get('/pages', function (request, reply) {
+  return renderPage('index', reply);
+});
+
+fastify.get('/pages/:page', function (request, reply) {
+  // @ts-ignore
+  const page = request.params.page;
+  return renderPage(page, reply);
+});
+
 fastify.get('/fragments/contacts', function (request, reply) {
   reply.type("text/html").send(`
     <div data-testid="contacts">
@@ -38,7 +51,6 @@ fastify.get('/fragments/contacts', function (request, reply) {
   `)
 })
 
-// Run the server!
 fastify.listen({ port: 3000 }, function (err, address) {
   if (err) {
     fastify.log.error(err)
