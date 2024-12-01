@@ -54,6 +54,7 @@ export class Xmth {
         return acc;
       },
       // Atrocious, will be refactored
+      // TODO : refactor when we have an error mechanism in place
       null as { url: string; verb: string } | null,
     )!;
   }
