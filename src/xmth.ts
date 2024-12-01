@@ -32,6 +32,11 @@ export class Xmth {
           const result = await this.httpClient.send(url, verb);
           this.swap(swapType, target, result);
         });
+      } else if (trigger === 'mouseenter') {
+        loader.addEventListener('mouseenter', async () => {
+          const result = await this.httpClient.send(url, verb);
+          this.swap(swapType, target, result);
+        });
       } else {
         const result = await this.httpClient.send(url, verb);
         this.swap(swapType, target, result);

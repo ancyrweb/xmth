@@ -59,4 +59,31 @@ describe('user-defined triggers', () => {
     `.trim(),
     );
   });
+
+  test('mouseenter', async () => {
+    await tester
+      .prepareHtml(
+        '<div class="container" xh-get="/" xh-trigger="mouseenter"></div>',
+      )
+      .createXmth(new SimpleAjaxAdapter())
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-get="/" xh-trigger="mouseenter"></div>
+    `.trim(),
+    );
+
+    const container = tester.document.querySelector('.container')!;
+    container.dispatchEvent(new Event('mouseenter'));
+
+    await tester.waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-get="/" xh-trigger="mouseenter"><h1>From Server</h1></div>
+    `.trim(),
+    );
+  });
 });
