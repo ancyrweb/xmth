@@ -13,7 +13,7 @@ test('xmth script', async ({ page }) => {
   expect(msg.text()).toBe('xmth loaded !');
 });
 
-test('load fragments on load', async ({ page }) => {
+test('fragment loading on page start', async ({ page }) => {
   await page.goto('/pages');
 
   const contacts = await page.waitForSelector('[data-testid="contacts"]');
@@ -24,7 +24,7 @@ test('load fragments on load', async ({ page }) => {
   expect(h1Text).toBe('Contacts');
 });
 
-test('load fragment on button click', async ({ page }) => {
+test('fragment loading on button click', async ({ page }) => {
   await page.goto('/pages/load-button');
 
   await page.getByRole('button', { name: 'Load Contacts' }).click();
