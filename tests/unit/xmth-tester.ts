@@ -1,9 +1,11 @@
 import { Window, Document } from 'happy-dom';
-import { ForSendingAjaxRequests, Xmth } from '../../src/xmth';
+import { Xmth } from '../../src/xmth';
+import { IHttpClient } from '../../src/ports/http-client';
 
 export class XmthTester {
   public window: Window;
   public document: Document;
+  public xmth: Xmth | undefined;
 
   constructor() {
     this.window = new Window({ url: 'https://localhost:3000' });
@@ -15,12 +17,19 @@ export class XmthTester {
     return this;
   }
 
-  createXmth(forSendingAjaxRequests: ForSendingAjaxRequests) {
-    return new Xmth(this.document as any, forSendingAjaxRequests);
+  createXmth(httpClient: IHttpClient) {
+    this.xmth = new Xmth(this.document as any, httpClient);
+    return this;
   }
 
-  waitForDOMOperations() {
-    return new Promise((resolve) => setTimeout(resolve, 0));
+  initialize() {
+    this.xmth!.initialize();
+    return this;
+  }
+
+  async waitForDOMOperations() {
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    return this;
   }
 
   close() {

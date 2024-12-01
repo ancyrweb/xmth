@@ -9,6 +9,9 @@
     "strict": true,
     "skipLibCheck": true,
     "outDir": "./dist",
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
     "src/**/*",
