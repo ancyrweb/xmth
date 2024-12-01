@@ -1,17 +1,9 @@
-export interface ForSendingAjaxRequests {
-  send(url: string): Promise<string>;
-}
-
-export class FetchAdapter implements ForSendingAjaxRequests {
-  send(url: string): Promise<string> {
-    return fetch(url).then((response) => response.text());
-  }
-}
+import { IHttpClient } from './ports/http-client';
 
 export class Xmth {
   constructor(
     private readonly document: Document,
-    private readonly forSending: ForSendingAjaxRequests,
+    private readonly httpClient: IHttpClient,
   ) {}
 
   initialize() {
@@ -25,7 +17,7 @@ export class Xmth {
         )!;
       }
 
-      const result = await this.forSending.send(url);
+      const result = await this.httpClient.send(url);
       target.innerHTML = result;
     });
   }
