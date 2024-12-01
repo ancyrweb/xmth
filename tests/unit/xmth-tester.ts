@@ -8,7 +8,7 @@ export class XmthTester {
   public xmth: Xmth | undefined;
 
   constructor() {
-    this.window = new Window({ url: 'https://localhost:3000' });
+    this.window = new Window();
     this.document = this.window.document;
   }
 
