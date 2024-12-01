@@ -42,6 +42,8 @@ export class Xmth {
       target.insertAdjacentHTML('beforebegin', value);
     } else if (type === 'afterBegin') {
       target.insertAdjacentHTML('afterbegin', value);
+    } else if (type === 'beforeEnd') {
+      target.insertAdjacentHTML('beforeend', value);
     } else {
       target.innerHTML = value;
     }
