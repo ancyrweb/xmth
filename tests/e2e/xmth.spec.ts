@@ -10,7 +10,7 @@ test('xmth script', async ({ page }) => {
 
   const msgPromise = page.waitForEvent('console');
   const msg = await msgPromise;
-  expect(msg.text()).toBe("xmth loaded !");
+  expect(msg.text()).toBe('xmth loaded !');
 });
 
 test('load fragments on load', async ({ page }) => {
@@ -21,7 +21,7 @@ test('load fragments on load', async ({ page }) => {
   expect(h1).not.toBeNull();
 
   let h1Text = await h1?.innerText();
-  expect(h1Text).toBe("Contacts");
+  expect(h1Text).toBe('Contacts');
 });
 
 test('load fragment on button click', async ({ page }) => {
@@ -34,6 +34,5 @@ test('load fragment on button click', async ({ page }) => {
   expect(h1).not.toBeNull();
 
   let h1Text = await h1?.innerText();
-  expect(h1Text).toBe("Contacts");
+  expect(h1Text).toBe('Contacts');
 });
-
