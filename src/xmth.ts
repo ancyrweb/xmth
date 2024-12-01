@@ -12,15 +12,7 @@ export class Xmth {
 
     loaders.forEach(async (loader) => {
       const elementType = loader.tagName.toLowerCase();
-      let url, verb;
-
-      if (loader.hasAttribute('xh-post')) {
-        url = loader.getAttribute('xh-post')!;
-        verb = 'POST';
-      } else {
-        url = loader.getAttribute('xh-get')!;
-        verb = 'GET';
-      }
+      const { url, verb } = this.extractUrlAndVerb(loader);
 
       let target = loader;
       if (loader.hasAttribute('xh-target')) {
@@ -41,6 +33,20 @@ export class Xmth {
         this.swap(swap, target, result);
       }
     });
+  }
+
+  private extractUrlAndVerb(loader: Element) {
+    if (loader.hasAttribute('xh-post')) {
+      return {
+        url: loader.getAttribute('xh-post')!,
+        verb: 'POST',
+      };
+    } else {
+      return {
+        url: loader.getAttribute('xh-get')!,
+        verb: 'GET',
+      };
+    }
   }
 
   private swap(type: string, target: Element, value: string) {
