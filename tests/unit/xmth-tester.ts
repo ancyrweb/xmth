@@ -18,7 +18,12 @@ export class XmthTester {
   }
 
   createXmth(httpClient: IHttpClient) {
-    this.xmth = new Xmth(this.document as any, httpClient);
+    this.xmth = new Xmth(
+      // happy-dom's Document is not 100% compatible with the real DOM
+      // But the surface API cover our needs, so the cast is safe
+      this.document as any,
+      httpClient,
+    );
     return this;
   }
 
