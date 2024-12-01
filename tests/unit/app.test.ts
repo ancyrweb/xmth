@@ -64,6 +64,7 @@ describe('getting data through AJAX', () => {
     const container = tester.document.querySelector('.target')!;
     expect(container.innerHTML).toBe('');
   });
+
   test('clicking on the button loads the data', async () => {
     await tester
       .prepareHtml(

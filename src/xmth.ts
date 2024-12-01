@@ -24,7 +24,12 @@ export class Xmth {
           target.innerHTML = await this.httpClient.send(url);
         });
       } else {
-        target.innerHTML = await this.httpClient.send(url);
+        const swap = loader.getAttribute('xh-swap') ?? 'innerHTML';
+        if (swap === 'outerHTML') {
+          target.outerHTML = await this.httpClient.send(url);
+        } else {
+          target.innerHTML = await this.httpClient.send(url);
+        }
       }
     });
   }
