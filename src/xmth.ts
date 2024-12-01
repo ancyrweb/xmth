@@ -19,18 +19,25 @@ export class Xmth {
         )!;
       }
 
+      const swap = loader.getAttribute('xh-swap') ?? 'innerHTML';
+
       if (elementType === 'button') {
         loader.addEventListener('click', async () => {
-          target.innerHTML = await this.httpClient.send(url);
+          const result = await this.httpClient.send(url);
+          this.swap(swap, target, result);
         });
       } else {
-        const swap = loader.getAttribute('xh-swap') ?? 'innerHTML';
-        if (swap === 'outerHTML') {
-          target.outerHTML = await this.httpClient.send(url);
-        } else {
-          target.innerHTML = await this.httpClient.send(url);
-        }
+        const result = await this.httpClient.send(url);
+        this.swap(swap, target, result);
       }
     });
+  }
+
+  private swap(type: string, target: Element, value: string) {
+    if (type === 'outerHTML') {
+      target.outerHTML = value;
+    } else {
+      target.innerHTML = value;
+    }
   }
 }
