@@ -29,6 +29,10 @@ export class Xmth {
         this.swap(swapType, target, result);
       } else {
         element.addEventListener(trigger.action, async () => {
+          if (trigger.hasDelay()) {
+            await this.chronology.wait(trigger.delayInMs());
+          }
+
           const result = await this.httpClient.send(url, verb);
           this.swap(swapType, target, result);
         });
