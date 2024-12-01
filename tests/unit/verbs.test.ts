@@ -36,4 +36,18 @@ describe('verbs', () => {
     `.trim(),
     );
   });
+
+  test('POST', async () => {
+    await tester
+      .prepareHtml('<div class="container" xh-post="/"></div>')
+      .createXmth(new VerbBoundedHttpClient('POST'))
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-post="/"><h1>From Server</h1></div>
+    `.trim(),
+    );
+  });
 });
