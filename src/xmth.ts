@@ -7,10 +7,21 @@ export class Xmth {
   ) {}
 
   initialize() {
-    this.document.querySelectorAll('[xh-get]').forEach(async (loader) => {
-      const elementType = loader.tagName.toLowerCase();
+    const selectors = ['[xh-get]', '[xh-post]'];
+    const loaders = this.document.querySelectorAll(selectors.join(', '));
 
-      let url = loader.getAttribute('xh-get')!;
+    loaders.forEach(async (loader) => {
+      const elementType = loader.tagName.toLowerCase();
+      let url, verb;
+
+      if (loader.hasAttribute('xh-post')) {
+        url = loader.getAttribute('xh-post')!;
+        verb = 'POST';
+      } else {
+        url = loader.getAttribute('xh-get')!;
+        verb = 'GET';
+      }
+
       let target = loader;
       if (loader.hasAttribute('xh-target')) {
         target = this.document.querySelector(
@@ -22,35 +33,11 @@ export class Xmth {
 
       if (elementType === 'button') {
         loader.addEventListener('click', async () => {
-          const result = await this.httpClient.send(url, 'GET');
+          const result = await this.httpClient.send(url, verb);
           this.swap(swap, target, result);
         });
       } else {
-        const result = await this.httpClient.send(url, 'GET');
-        this.swap(swap, target, result);
-      }
-    });
-
-    this.document.querySelectorAll('[xh-post]').forEach(async (loader) => {
-      const elementType = loader.tagName.toLowerCase();
-
-      let url = loader.getAttribute('xh-post')!;
-      let target = loader;
-      if (loader.hasAttribute('xh-target')) {
-        target = this.document.querySelector(
-          loader.getAttribute('xh-target')!,
-        )!;
-      }
-
-      const swap = loader.getAttribute('xh-swap') ?? 'innerHTML';
-
-      if (elementType === 'button') {
-        loader.addEventListener('click', async () => {
-          const result = await this.httpClient.send(url, 'POST');
-          this.swap(swap, target, result);
-        });
-      } else {
-        const result = await this.httpClient.send(url, 'POST');
+        const result = await this.httpClient.send(url, verb);
         this.swap(swap, target, result);
       }
     });
