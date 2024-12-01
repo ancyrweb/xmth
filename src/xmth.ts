@@ -23,11 +23,11 @@ export class Xmth {
 
       if (elementType === 'button') {
         loader.addEventListener('click', async () => {
-          const result = await this.httpClient.send(url);
+          const result = await this.httpClient.send(url, 'GET');
           this.swap(swap, target, result);
         });
       } else {
-        const result = await this.httpClient.send(url);
+        const result = await this.httpClient.send(url, 'GET');
         this.swap(swap, target, result);
       }
     });

@@ -1,3 +1,3 @@
 export interface IHttpClient {
-  send(url: string): Promise<string>;
+  send(url: string, method: string): Promise<string>;
 }
