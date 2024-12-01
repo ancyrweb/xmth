@@ -20,7 +20,9 @@ export class Xmth {
       }
 
       if (elementType === 'button') {
-        // TODO
+        loader.addEventListener('click', async () => {
+          target.innerHTML = await this.httpClient.send(url);
+        });
       } else {
         target.innerHTML = await this.httpClient.send(url);
       }

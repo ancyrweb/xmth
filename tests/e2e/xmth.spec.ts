@@ -24,7 +24,7 @@ test('load fragments on load', async ({ page }) => {
   expect(h1Text).toBe('Contacts');
 });
 
-test.skip('load fragment on button click', async ({ page }) => {
+test('load fragment on button click', async ({ page }) => {
   await page.goto('/pages/load-button');
 
   await page.getByRole('button', { name: 'Load Contacts' }).click();
