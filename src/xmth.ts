@@ -48,6 +48,8 @@ export class Xmth {
       target.insertAdjacentHTML('afterend', value);
     } else if (type === 'delete') {
       target.remove();
+    } else if (type === 'none') {
+      return;
     } else {
       target.innerHTML = value;
     }

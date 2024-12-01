@@ -136,4 +136,15 @@ describe('swaps', () => {
 
     expect(tester.document.body.innerHTML).toEqual('');
   });
+  test('none', async () => {
+    await tester
+      .prepareHtml('<div class="container" xh-get="/" xh-swap="none"></div>')
+      .createXmth(new SimpleAjaxAdapter())
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      '<div class="container" xh-get="/" xh-swap="none"></div>',
+    );
+  });
 });
