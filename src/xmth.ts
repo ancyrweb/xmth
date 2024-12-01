@@ -1,5 +1,8 @@
 import { IHttpClient } from './ports/http-client';
 
+const verbs = ['GET', 'POST'];
+const allSelectors = verbs.map((verb) => `[xh-${verb.toLowerCase()}]`);
+
 export class Xmth {
   constructor(
     private readonly document: Document,
@@ -7,8 +10,7 @@ export class Xmth {
   ) {}
 
   initialize() {
-    const selectors = ['[xh-get]', '[xh-post]'];
-    const loaders = this.document.querySelectorAll(selectors.join(', '));
+    const loaders = this.document.querySelectorAll(allSelectors.join(', '));
 
     loaders.forEach(async (loader) => {
       const elementType = loader.tagName.toLowerCase();
@@ -41,17 +43,19 @@ export class Xmth {
   }
 
   private extractUrlAndVerb(loader: Element) {
-    if (loader.hasAttribute('xh-post')) {
-      return {
-        url: loader.getAttribute('xh-post')!,
-        verb: 'POST',
-      };
-    } else {
-      return {
-        url: loader.getAttribute('xh-get')!,
-        verb: 'GET',
-      };
-    }
+    return verbs.reduce(
+      (acc, verb) => {
+        if (loader.hasAttribute(`xh-${verb.toLowerCase()}`)) {
+          return {
+            url: loader.getAttribute(`xh-${verb.toLowerCase()}`)!,
+            verb,
+          };
+        }
+        return acc;
+      },
+      // Atrocious, will be refactored
+      null as { url: string; verb: string } | null,
+    )!;
   }
 
   private swap(type: string, target: Element, value: string) {
