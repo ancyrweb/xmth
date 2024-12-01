@@ -3,6 +3,7 @@ import { IHttpClient } from '../../src/ports/http-client';
 
 class VerbBoundedHttpClient implements IHttpClient {
   constructor(private readonly expectedVerb = 'GET') {}
+
   async send(url: string, method: string): Promise<string> {
     if (method !== this.expectedVerb) {
       throw new Error(`Expected ${this.expectedVerb} but got ${method}`);

@@ -1,12 +1,7 @@
 import { XmthTester } from './xmth-tester';
 import { IHttpClient } from '../../src/ports/http-client';
 import { Event } from 'happy-dom';
-
-class SimpleAjaxAdapter implements IHttpClient {
-  async send(url: string): Promise<string> {
-    return `<h1>From Server</h1>`;
-  }
-}
+import { SimpleAjaxAdapter } from '../adapters/simple-ajax-adapter';
 
 let tester: XmthTester;
 
