@@ -13,26 +13,31 @@ export class Xmth {
     loaders.forEach(async (loader) => {
       const elementType = loader.tagName.toLowerCase();
       const { url, verb } = this.extractUrlAndVerb(loader);
-
-      let target = loader;
-      if (loader.hasAttribute('xh-target')) {
-        target = this.document.querySelector(
-          loader.getAttribute('xh-target')!,
-        )!;
-      }
-
-      const swap = loader.getAttribute('xh-swap') ?? 'innerHTML';
+      const target = this.extractTarget(loader);
+      const swapType = this.extractSwapType(loader);
 
       if (elementType === 'button') {
         loader.addEventListener('click', async () => {
           const result = await this.httpClient.send(url, verb);
-          this.swap(swap, target, result);
+          this.swap(swapType, target, result);
         });
       } else {
         const result = await this.httpClient.send(url, verb);
-        this.swap(swap, target, result);
+        this.swap(swapType, target, result);
       }
     });
+  }
+
+  private extractSwapType(loader: Element) {
+    return loader.getAttribute('xh-swap') ?? 'innerHTML';
+  }
+
+  private extractTarget(loader: Element) {
+    let target = loader;
+    if (loader.hasAttribute('xh-target')) {
+      target = this.document.querySelector(loader.getAttribute('xh-target')!)!;
+    }
+    return target;
   }
 
   private extractUrlAndVerb(loader: Element) {
