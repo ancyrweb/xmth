@@ -95,7 +95,7 @@ describe('swaps', () => {
     );
   });
 
-  test('beforeend', async () => {
+  test('beforeEnd', async () => {
     await tester
       .prepareHtml(
         '<div class="container" xh-get="/" xh-swap="beforeEnd"><hr></div>',
