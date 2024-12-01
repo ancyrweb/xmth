@@ -36,6 +36,8 @@ export class Xmth {
   private swap(type: string, target: Element, value: string) {
     if (type === 'outerHTML') {
       target.outerHTML = value;
+    } else if (type === 'textContent') {
+      target.textContent = value;
     } else {
       target.innerHTML = value;
     }
