@@ -50,4 +50,46 @@ describe('verbs', () => {
     `.trim(),
     );
   });
+
+  test('PATCH', async () => {
+    await tester
+      .prepareHtml('<div class="container" xh-patch="/"></div>')
+      .createXmth(new VerbBoundedHttpClient('PATCH'))
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-patch="/"><h1>From Server</h1></div>
+    `.trim(),
+    );
+  });
+
+  test('PUT', async () => {
+    await tester
+      .prepareHtml('<div class="container" xh-put="/"></div>')
+      .createXmth(new VerbBoundedHttpClient('PUT'))
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-put="/"><h1>From Server</h1></div>
+    `.trim(),
+    );
+  });
+
+  test('DELETE', async () => {
+    await tester
+      .prepareHtml('<div class="container" xh-delete="/"></div>')
+      .createXmth(new VerbBoundedHttpClient('DELETE'))
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-delete="/"><h1>From Server</h1></div>
+    `.trim(),
+    );
+  });
 });

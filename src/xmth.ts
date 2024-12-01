@@ -1,6 +1,6 @@
 import { IHttpClient } from './ports/http-client';
 
-const verbs = ['GET', 'POST'];
+const verbs = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'];
 const allSelectors = verbs.map((verb) => `[xh-${verb.toLowerCase()}]`);
 
 export class Xmth {
