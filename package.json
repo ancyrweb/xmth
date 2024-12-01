@@ -10,7 +10,7 @@
     "prepare": "husky",
     "test:e2e": "pnpm playwright test",
     "test:unit": "pnpm vitest run",
-    "test": "pnpm test:unit && pnpm test:e2e"
+    "test": "pnpm test:unit && pnpm test:e2e && pnpm format"
   },
   "keywords": [],
   "author": "",
