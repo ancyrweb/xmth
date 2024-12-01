@@ -110,4 +110,20 @@ describe('swaps', () => {
     `.trim(),
     );
   });
+
+  test('afterEnd', async () => {
+    await tester
+      .prepareHtml(
+        '<div class="container" xh-get="/" xh-swap="afterEnd"></div>',
+      )
+      .createXmth(new SimpleAjaxAdapter())
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <div class="container" xh-get="/" xh-swap="afterEnd"></div><h1>From Server</h1>
+    `.trim(),
+    );
+  });
 });
