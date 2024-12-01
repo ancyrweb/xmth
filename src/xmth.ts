@@ -21,14 +21,12 @@ export class Xmth {
       const trigger = Trigger.fromElement(element);
 
       if (trigger.action === 'load') {
-        if (trigger.delay > 0) {
-          await this.chronology.wait(trigger.delay);
-          const result = await this.httpClient.send(url, verb);
-          this.swap(swapType, target, result);
-        } else {
-          const result = await this.httpClient.send(url, verb);
-          this.swap(swapType, target, result);
+        if (trigger.hasDelay()) {
+          await this.chronology.wait(trigger.delayInMs());
         }
+
+        const result = await this.httpClient.send(url, verb);
+        this.swap(swapType, target, result);
       } else {
         element.addEventListener(trigger.action, async () => {
           const result = await this.httpClient.send(url, verb);
@@ -93,9 +91,9 @@ export class Xmth {
 
 class Trigger {
   public action: string;
-  public delay: number;
+  public delay: Timing | null;
 
-  constructor(action: string, delay = 0) {
+  constructor(action: string, delay: Timing | null = null) {
     this.action = action;
     this.delay = delay;
   }
@@ -106,18 +104,12 @@ class Trigger {
     if (element.hasAttribute('xh-trigger')) {
       const attribute = element.getAttribute('xh-trigger')!;
       const parts = attribute.split(' ');
-      let delay = 0;
+      let delay: Timing | null = null;
+
       if (parts.length > 1 && parts[1].startsWith('delay')) {
         const subparts = parts[1].split(':');
         let time = subparts[1];
-        if (time.includes('ms')) {
-          time = time.replace('ms', '');
-        } else if (time.includes('s')) {
-          time = time.replace('s', '');
-          time = (parseInt(time, 10) * 1000).toString();
-        }
-
-        delay = parseInt(time, 10);
+        delay = Timing.fromString(time);
       }
 
       return new Trigger(parts[0], delay);
@@ -126,5 +118,37 @@ class Trigger {
     }
 
     return new Trigger('load');
+  }
+
+  hasDelay() {
+    return this.delay !== null && this.delay.toMs() > 0;
+  }
+
+  delayInMs() {
+    // Safety can be ensure by using a Null Object pattern
+    return this.delay!.toMs();
+  }
+}
+
+class Timing {
+  public ms: number;
+
+  constructor(ms: number) {
+    this.ms = ms;
+  }
+
+  static fromString(time: string) {
+    if (time.includes('ms')) {
+      time = time.replace('ms', '');
+    } else if (time.includes('s')) {
+      time = time.replace('s', '');
+      time = (parseInt(time, 10) * 1000).toString();
+    }
+
+    return new Timing(parseInt(time, 10));
+  }
+
+  toMs() {
+    return this.ms;
   }
 }

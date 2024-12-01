@@ -1,6 +1,5 @@
 import { XmthTester } from './xmth-tester';
 import { IHttpClient } from '../../src/ports/http-client';
-import { Event } from 'happy-dom';
 import { ForwardableChronology } from '../adapters/forwardable-chronology';
 
 class SimpleAjaxAdapter implements IHttpClient {
