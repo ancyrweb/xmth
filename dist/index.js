@@ -1,15 +1,10 @@
 "use strict";
 (() => {
   // src/xmth.ts
-  var FetchAdapter = class {
-    send(url) {
-      return fetch(url).then((response) => response.text());
-    }
-  };
   var Xmth = class {
-    constructor(document2, forSending) {
+    constructor(document2, httpClient) {
       this.document = document2;
-      this.forSending = forSending;
+      this.httpClient = httpClient;
     }
     initialize() {
       const loaders = this.document.querySelectorAll("[xh-get]");
@@ -21,9 +16,16 @@
             loader.getAttribute("xh-target")
           );
         }
-        const result = await this.forSending.send(url);
+        const result = await this.httpClient.send(url);
         target.innerHTML = result;
       });
+    }
+  };
+
+  // src/adapters/fetch-adapter.ts
+  var FetchAdapter = class {
+    send(url) {
+      return fetch(url).then((response) => response.text());
     }
   };
 

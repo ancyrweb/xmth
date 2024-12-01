@@ -10,6 +10,7 @@
     "prepare": "husky",
     "test:e2e": "pnpm playwright test",
     "test:unit": "pnpm vitest run",
+    "test:unit:coverage": "pnpm vitest run --coverage",
     "test": "pnpm test:unit && pnpm test:e2e && pnpm format"
   },
   "keywords": [],
@@ -19,6 +20,7 @@
     "@fastify/static": "^8.0.3",
     "@playwright/test": "^1.49.0",
     "@types/node": "^22.10.1",
+    "@vitest/coverage-istanbul": "^2.1.6",
     "esbuild": "^0.24.0",
     "fastify": "^5.1.0",
     "happy-dom": "^15.11.7",
