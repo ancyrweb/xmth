@@ -17,15 +17,7 @@ export class Xmth {
       const { url, verb } = this.extractUrlAndVerb(loader);
       const target = this.extractTarget(loader);
       const swapType = this.extractSwapType(loader);
-
-      let trigger = 'load';
-      if (loader.hasAttribute('xh-trigger')) {
-        trigger = loader.getAttribute('xh-trigger')!;
-      } else {
-        if (elementType === 'button') {
-          trigger = 'click';
-        }
-      }
+      const trigger = this.extractTrigger(loader, elementType);
 
       if (trigger === 'load') {
         const result = await this.httpClient.send(url, verb);
@@ -37,6 +29,16 @@ export class Xmth {
         });
       }
     });
+  }
+
+  private extractTrigger(loader: Element, elementType: string) {
+    if (loader.hasAttribute('xh-trigger')) {
+      return loader.getAttribute('xh-trigger')!;
+    } else if (elementType === 'button') {
+      return 'click';
+    }
+
+    return 'load';
   }
 
   private extractSwapType(loader: Element) {
