@@ -1,5 +1,4 @@
 import { XmthTester } from './xmth-tester';
-import { IHttpClient } from '../../src/ports/http-client';
 import { SimpleAjaxAdapter } from '../adapters/simple-ajax-adapter';
 
 let tester: XmthTester;

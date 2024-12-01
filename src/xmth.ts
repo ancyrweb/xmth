@@ -117,8 +117,7 @@ class Trigger {
 
       if (parts.length > 1 && parts[1].startsWith('delay')) {
         const subparts = parts[1].split(':');
-        let time = subparts[1];
-        delay = Timing.fromString(time);
+        delay = Timing.fromString(subparts[1]);
       }
 
       return new Trigger(parts[0], delay);
