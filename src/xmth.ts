@@ -21,8 +21,14 @@ export class Xmth {
       const trigger = Trigger.fromElement(element);
 
       if (trigger.action === 'load') {
-        const result = await this.httpClient.send(url, verb);
-        this.swap(swapType, target, result);
+        if (trigger.delay > 0) {
+          await this.chronology.wait(trigger.delay);
+          const result = await this.httpClient.send(url, verb);
+          this.swap(swapType, target, result);
+        } else {
+          const result = await this.httpClient.send(url, verb);
+          this.swap(swapType, target, result);
+        }
       } else {
         element.addEventListener(trigger.action, async () => {
           const result = await this.httpClient.send(url, verb);
@@ -100,7 +106,21 @@ class Trigger {
     if (element.hasAttribute('xh-trigger')) {
       const attribute = element.getAttribute('xh-trigger')!;
       const parts = attribute.split(' ');
-      return new Trigger(parts[0]);
+      let delay = 0;
+      if (parts.length > 1 && parts[1].startsWith('delay')) {
+        const subparts = parts[1].split(':');
+        let time = subparts[1];
+        if (time.includes('ms')) {
+          time = time.replace('ms', '');
+        } else if (time.includes('s')) {
+          time = time.replace('s', '');
+          time = (parseInt(time, 10) * 1000).toString();
+        }
+
+        delay = parseInt(time, 10);
+      }
+
+      return new Trigger(parts[0], delay);
     } else if (elementType === 'button') {
       return new Trigger('click');
     }

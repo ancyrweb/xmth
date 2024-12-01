@@ -2,12 +2,14 @@ import { Window, Document } from 'happy-dom';
 import { Xmth } from '../../src/xmth';
 import { IHttpClient } from '../../src/ports/http-client';
 import { ImmediateChronology } from '../adapters/immediate-chronology';
+import { IChronology } from '../../src/ports/chronology';
 
 export class XmthTester {
   public window: Window;
   public document: Document;
   public xmth: Xmth | undefined;
   public httpClient: IHttpClient | undefined;
+  public chronology: IChronology = new ImmediateChronology();
 
   constructor() {
     this.window = new Window();
@@ -24,13 +26,18 @@ export class XmthTester {
     return this;
   }
 
+  withChronology(chronology: IChronology) {
+    this.chronology = chronology;
+    return this;
+  }
+
   createXmth() {
     this.xmth = new Xmth(
       // happy-dom's Document is not 100% compatible with the real DOM
       // But the surface API cover our needs, so the cast is safe
       this.document as any,
       this.httpClient!,
-      new ImmediateChronology(),
+      this.chronology,
     );
     return this;
   }

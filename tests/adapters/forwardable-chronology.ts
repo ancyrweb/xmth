@@ -20,5 +20,8 @@ export class ForwardableChronology implements IChronology {
         stamp.resolve();
       }
     }
+
+    // Required for every stamps to run before resolving the promise
+    return new Promise((resolve) => setImmediate(resolve));
   }
 }
