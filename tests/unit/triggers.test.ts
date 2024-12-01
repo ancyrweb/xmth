@@ -22,7 +22,8 @@ describe('user-defined triggers', () => {
   test('on page load', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-trigger="load"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -36,7 +37,8 @@ describe('user-defined triggers', () => {
   test('on click', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-trigger="click"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -61,7 +63,8 @@ describe('user-defined triggers', () => {
   test('mouseenter', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-trigger="mouseenter"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 

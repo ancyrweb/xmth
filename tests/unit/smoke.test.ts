@@ -21,7 +21,8 @@ describe('getting data through AJAX', () => {
   test('in the same target', async () => {
     await tester
       .prepareHtml('<div class="container" xh-get="/"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -39,7 +40,8 @@ describe('getting data through AJAX', () => {
       </div>
 `,
       )
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -57,7 +59,8 @@ describe('getting data through AJAX', () => {
       </div>
 `,
       )
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -75,7 +78,8 @@ describe('getting data through AJAX', () => {
       </div>
 `,
       )
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 

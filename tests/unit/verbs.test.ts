@@ -26,7 +26,8 @@ describe('verbs', () => {
   test('GET', async () => {
     await tester
       .prepareHtml('<div xh-get="/"></div>')
-      .createXmth(new VerbBoundedHttpClient('GET'))
+      .withHttpClient(new VerbBoundedHttpClient('GET'))
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -40,7 +41,8 @@ describe('verbs', () => {
   test('POST', async () => {
     await tester
       .prepareHtml('<div xh-post="/"></div>')
-      .createXmth(new VerbBoundedHttpClient('POST'))
+      .withHttpClient(new VerbBoundedHttpClient('POST'))
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -54,7 +56,8 @@ describe('verbs', () => {
   test('PATCH', async () => {
     await tester
       .prepareHtml('<div xh-patch="/"></div>')
-      .createXmth(new VerbBoundedHttpClient('PATCH'))
+      .withHttpClient(new VerbBoundedHttpClient('PATCH'))
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -68,7 +71,8 @@ describe('verbs', () => {
   test('PUT', async () => {
     await tester
       .prepareHtml('<div xh-put="/"></div>')
-      .createXmth(new VerbBoundedHttpClient('PUT'))
+      .withHttpClient(new VerbBoundedHttpClient('PUT'))
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -82,7 +86,8 @@ describe('verbs', () => {
   test('DELETE', async () => {
     await tester
       .prepareHtml('<div xh-delete="/"></div>')
-      .createXmth(new VerbBoundedHttpClient('DELETE'))
+      .withHttpClient(new VerbBoundedHttpClient('DELETE'))
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 

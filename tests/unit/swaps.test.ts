@@ -21,7 +21,8 @@ describe('swaps', () => {
   test('innerHTML', async () => {
     await tester
       .prepareHtml('<div xh-get="/"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -35,7 +36,8 @@ describe('swaps', () => {
   test('outerHTML', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="outerHTML"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -45,7 +47,8 @@ describe('swaps', () => {
   test('textContent', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="textContent"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -60,7 +63,8 @@ describe('swaps', () => {
   test('beforeBegin', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="beforeBegin"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -74,7 +78,8 @@ describe('swaps', () => {
   test('afterBegin', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="afterBegin"><hr></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -88,7 +93,8 @@ describe('swaps', () => {
   test('beforeEnd', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="beforeEnd"><hr></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -102,7 +108,8 @@ describe('swaps', () => {
   test('afterEnd', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="afterEnd"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -116,7 +123,8 @@ describe('swaps', () => {
   test('delete', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="delete"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 
@@ -125,7 +133,8 @@ describe('swaps', () => {
   test('none', async () => {
     await tester
       .prepareHtml('<div xh-get="/" xh-swap="none"></div>')
-      .createXmth(new SimpleAjaxAdapter())
+      .withHttpClient(new SimpleAjaxAdapter())
+      .createXmth()
       .initialize()
       .waitForDOMOperations();
 

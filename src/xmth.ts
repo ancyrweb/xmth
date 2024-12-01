@@ -1,4 +1,5 @@
 import { IHttpClient } from './ports/http-client';
+import { IChronology } from './ports/chronology';
 
 const verbs = ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'];
 const allSelectors = verbs.map((verb) => `[xh-${verb.toLowerCase()}]`);
@@ -7,38 +8,28 @@ export class Xmth {
   constructor(
     private readonly document: Document,
     private readonly httpClient: IHttpClient,
+    private readonly chronology: IChronology,
   ) {}
 
   initialize() {
-    const loaders = this.document.querySelectorAll(allSelectors.join(', '));
+    const elements = this.document.querySelectorAll(allSelectors.join(', '));
 
-    loaders.forEach(async (loader) => {
-      const elementType = loader.tagName.toLowerCase();
-      const { url, verb } = this.extractUrlAndVerb(loader);
-      const target = this.extractTarget(loader);
-      const swapType = this.extractSwapType(loader);
-      const trigger = this.extractTrigger(loader, elementType);
+    elements.forEach(async (element) => {
+      const { url, verb } = this.extractUrlAndVerb(element);
+      const target = this.extractTarget(element);
+      const swapType = this.extractSwapType(element);
+      const trigger = Trigger.fromElement(element);
 
-      if (trigger === 'load') {
+      if (trigger.action === 'load') {
         const result = await this.httpClient.send(url, verb);
         this.swap(swapType, target, result);
       } else {
-        loader.addEventListener(trigger, async () => {
+        element.addEventListener(trigger.action, async () => {
           const result = await this.httpClient.send(url, verb);
           this.swap(swapType, target, result);
         });
       }
     });
-  }
-
-  private extractTrigger(loader: Element, elementType: string) {
-    if (loader.hasAttribute('xh-trigger')) {
-      return loader.getAttribute('xh-trigger')!;
-    } else if (elementType === 'button') {
-      return 'click';
-    }
-
-    return 'load';
   }
 
   private extractSwapType(loader: Element) {
@@ -50,6 +41,7 @@ export class Xmth {
     if (loader.hasAttribute('xh-target')) {
       target = this.document.querySelector(loader.getAttribute('xh-target')!)!;
     }
+
     return target;
   }
 
@@ -90,5 +82,29 @@ export class Xmth {
     } else {
       target.innerHTML = value;
     }
+  }
+}
+
+class Trigger {
+  public action: string;
+  public delay: number;
+
+  constructor(action: string, delay = 0) {
+    this.action = action;
+    this.delay = delay;
+  }
+
+  static fromElement(element: Element) {
+    const elementType = element.tagName.toLowerCase();
+
+    if (element.hasAttribute('xh-trigger')) {
+      const attribute = element.getAttribute('xh-trigger')!;
+      const parts = attribute.split(' ');
+      return new Trigger(parts[0]);
+    } else if (elementType === 'button') {
+      return new Trigger('click');
+    }
+
+    return new Trigger('load');
   }
 }
