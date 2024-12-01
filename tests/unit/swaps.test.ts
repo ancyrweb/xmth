@@ -62,4 +62,20 @@ describe('swaps', () => {
     `.trim(),
     );
   });
+
+  test('beforeBegin', async () => {
+    await tester
+      .prepareHtml(
+        '<div class="container" xh-get="/" xh-swap="beforeBegin"></div>',
+      )
+      .createXmth(new SimpleAjaxAdapter())
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual(
+      `
+      <h1>From Server</h1><div class="container" xh-get="/" xh-swap="beforeBegin"></div>
+    `.trim(),
+    );
+  });
 });
