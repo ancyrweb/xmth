@@ -1,1 +1,1 @@
-pnpm test
+pnpm hook:precommit
