@@ -20,23 +20,21 @@ afterEach(() => {
 describe('swaps', () => {
   test('innerHTML', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-get="/"></div>')
+      .prepareHtml('<div xh-get="/"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-get="/"><h1>From Server</h1></div>
+      <div xh-get="/"><h1>From Server</h1></div>
     `.trim(),
     );
   });
 
   test('outerHTML', async () => {
     await tester
-      .prepareHtml(
-        '<div class="container" xh-get="/" xh-swap="outerHTML"></div>',
-      )
+      .prepareHtml('<div xh-get="/" xh-swap="outerHTML"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
@@ -46,9 +44,7 @@ describe('swaps', () => {
 
   test('textContent', async () => {
     await tester
-      .prepareHtml(
-        '<div class="container" xh-get="/" xh-swap="textContent"></div>',
-      )
+      .prepareHtml('<div xh-get="/" xh-swap="textContent"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
@@ -57,79 +53,69 @@ describe('swaps', () => {
     let escaped = content.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
     expect(tester.document.body.innerHTML).toEqual(
-      `
-      <div class="container" xh-get="/" xh-swap="textContent">${escaped}</div>
-    `.trim(),
+      `<div xh-get="/" xh-swap="textContent">${escaped}</div>`.trim(),
     );
   });
 
   test('beforeBegin', async () => {
     await tester
-      .prepareHtml(
-        '<div class="container" xh-get="/" xh-swap="beforeBegin"></div>',
-      )
+      .prepareHtml('<div xh-get="/" xh-swap="beforeBegin"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <h1>From Server</h1><div class="container" xh-get="/" xh-swap="beforeBegin"></div>
+      <h1>From Server</h1><div xh-get="/" xh-swap="beforeBegin"></div>
     `.trim(),
     );
   });
 
   test('afterBegin', async () => {
     await tester
-      .prepareHtml(
-        '<div class="container" xh-get="/" xh-swap="afterBegin"><hr></div>',
-      )
+      .prepareHtml('<div xh-get="/" xh-swap="afterBegin"><hr></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-get="/" xh-swap="afterBegin"><h1>From Server</h1><hr></div>
+      <div xh-get="/" xh-swap="afterBegin"><h1>From Server</h1><hr></div>
     `.trim(),
     );
   });
 
   test('beforeEnd', async () => {
     await tester
-      .prepareHtml(
-        '<div class="container" xh-get="/" xh-swap="beforeEnd"><hr></div>',
-      )
+      .prepareHtml('<div xh-get="/" xh-swap="beforeEnd"><hr></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-get="/" xh-swap="beforeEnd"><hr><h1>From Server</h1></div>
+      <div xh-get="/" xh-swap="beforeEnd"><hr><h1>From Server</h1></div>
     `.trim(),
     );
   });
 
   test('afterEnd', async () => {
     await tester
-      .prepareHtml(
-        '<div class="container" xh-get="/" xh-swap="afterEnd"></div>',
-      )
+      .prepareHtml('<div xh-get="/" xh-swap="afterEnd"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-get="/" xh-swap="afterEnd"></div><h1>From Server</h1>
+      <div xh-get="/" xh-swap="afterEnd"></div><h1>From Server</h1>
     `.trim(),
     );
   });
 
   test('delete', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-get="/" xh-swap="delete"></div>')
+      .prepareHtml('<div xh-get="/" xh-swap="delete"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
@@ -138,13 +124,13 @@ describe('swaps', () => {
   });
   test('none', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-get="/" xh-swap="none"></div>')
+      .prepareHtml('<div xh-get="/" xh-swap="none"></div>')
       .createXmth(new SimpleAjaxAdapter())
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
-      '<div class="container" xh-get="/" xh-swap="none"></div>',
+      '<div xh-get="/" xh-swap="none"></div>',
     );
   });
 });

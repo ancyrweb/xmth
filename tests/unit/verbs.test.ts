@@ -25,70 +25,70 @@ afterEach(() => {
 describe('verbs', () => {
   test('GET', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-get="/"></div>')
+      .prepareHtml('<div xh-get="/"></div>')
       .createXmth(new VerbBoundedHttpClient('GET'))
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-get="/"><h1>From Server</h1></div>
+      <div xh-get="/"><h1>From Server</h1></div>
     `.trim(),
     );
   });
 
   test('POST', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-post="/"></div>')
+      .prepareHtml('<div xh-post="/"></div>')
       .createXmth(new VerbBoundedHttpClient('POST'))
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-post="/"><h1>From Server</h1></div>
+      <div xh-post="/"><h1>From Server</h1></div>
     `.trim(),
     );
   });
 
   test('PATCH', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-patch="/"></div>')
+      .prepareHtml('<div xh-patch="/"></div>')
       .createXmth(new VerbBoundedHttpClient('PATCH'))
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-patch="/"><h1>From Server</h1></div>
+      <div xh-patch="/"><h1>From Server</h1></div>
     `.trim(),
     );
   });
 
   test('PUT', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-put="/"></div>')
+      .prepareHtml('<div xh-put="/"></div>')
       .createXmth(new VerbBoundedHttpClient('PUT'))
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-put="/"><h1>From Server</h1></div>
+      <div xh-put="/"><h1>From Server</h1></div>
     `.trim(),
     );
   });
 
   test('DELETE', async () => {
     await tester
-      .prepareHtml('<div class="container" xh-delete="/"></div>')
+      .prepareHtml('<div xh-delete="/"></div>')
       .createXmth(new VerbBoundedHttpClient('DELETE'))
       .initialize()
       .waitForDOMOperations();
 
     expect(tester.document.body.innerHTML).toEqual(
       `
-      <div class="container" xh-delete="/"><h1>From Server</h1></div>
+      <div xh-delete="/"><h1>From Server</h1></div>
     `.trim(),
     );
   });
