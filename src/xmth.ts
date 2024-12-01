@@ -18,7 +18,16 @@ export class Xmth {
       const target = this.extractTarget(loader);
       const swapType = this.extractSwapType(loader);
 
-      if (elementType === 'button') {
+      let trigger = 'load';
+      if (loader.hasAttribute('xh-trigger')) {
+        trigger = loader.getAttribute('xh-trigger')!;
+      } else {
+        if (elementType === 'button') {
+          trigger = 'click';
+        }
+      }
+
+      if (trigger === 'click') {
         loader.addEventListener('click', async () => {
           const result = await this.httpClient.send(url, verb);
           this.swap(swapType, target, result);
