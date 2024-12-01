@@ -40,6 +40,8 @@ export class Xmth {
       target.textContent = value;
     } else if (type === 'beforeBegin') {
       target.insertAdjacentHTML('beforebegin', value);
+    } else if (type === 'afterBegin') {
+      target.insertAdjacentHTML('afterbegin', value);
     } else {
       target.innerHTML = value;
     }
