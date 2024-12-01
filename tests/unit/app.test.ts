@@ -46,4 +46,22 @@ describe('getting data through AJAX', () => {
     const container = tester.document.querySelector('.target')!;
     expect(container.innerHTML).toBe('<h1>From Server</h1>');
   });
+
+  test('if the target is a button, it does not fetch on page load', async () => {
+    await tester
+      .prepareHtml(
+        `
+      <div>
+          <button class="container" xh-get="/" xh-target=".target"></button>
+          <div class="target"></div>
+      </div>
+`,
+      )
+      .createXmth(new SimpleAjaxAdapter())
+      .initialize()
+      .waitForDOMOperations();
+
+    const container = tester.document.querySelector('.target')!;
+    expect(container.innerHTML).toBe('');
+  });
 });

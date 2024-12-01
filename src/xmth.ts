@@ -9,6 +9,8 @@ export class Xmth {
   initialize() {
     const loaders = this.document.querySelectorAll('[xh-get]');
     loaders.forEach(async (loader) => {
+      const elementType = loader.tagName.toLowerCase();
+
       let url = loader.getAttribute('xh-get')!;
       let target = loader;
       if (loader.hasAttribute('xh-target')) {
@@ -17,8 +19,11 @@ export class Xmth {
         )!;
       }
 
-      const result = await this.httpClient.send(url);
-      target.innerHTML = result;
+      if (elementType === 'button') {
+        // TODO
+      } else {
+        target.innerHTML = await this.httpClient.send(url);
+      }
     });
   }
 }
