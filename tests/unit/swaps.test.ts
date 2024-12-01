@@ -126,4 +126,14 @@ describe('swaps', () => {
     `.trim(),
     );
   });
+
+  test('delete', async () => {
+    await tester
+      .prepareHtml('<div class="container" xh-get="/" xh-swap="delete"></div>')
+      .createXmth(new SimpleAjaxAdapter())
+      .initialize()
+      .waitForDOMOperations();
+
+    expect(tester.document.body.innerHTML).toEqual('');
+  });
 });
