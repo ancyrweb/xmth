@@ -27,19 +27,14 @@ export class Xmth {
         }
       }
 
-      if (trigger === 'click') {
-        loader.addEventListener('click', async () => {
-          const result = await this.httpClient.send(url, verb);
-          this.swap(swapType, target, result);
-        });
-      } else if (trigger === 'mouseenter') {
-        loader.addEventListener('mouseenter', async () => {
-          const result = await this.httpClient.send(url, verb);
-          this.swap(swapType, target, result);
-        });
-      } else {
+      if (trigger === 'load') {
         const result = await this.httpClient.send(url, verb);
         this.swap(swapType, target, result);
+      } else {
+        loader.addEventListener(trigger, async () => {
+          const result = await this.httpClient.send(url, verb);
+          this.swap(swapType, target, result);
+        });
       }
     });
   }
